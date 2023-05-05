@@ -1,27 +1,15 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <h2>最新文章</h2>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        <v-tabs>
-          <v-tab>全部</v-tab>
-          <v-tab>人文</v-tab>
-          <v-tab>科技</v-tab>
-          <!-- 在此处添加其他选项卡 -->
-        </v-tabs>
-      </v-col>
-    </v-row>
+  <v-container class="h-100 d-flex flex-column">
+    <h2>最新文章</h2>
+    <v-tabs>
+      <v-tab>全部</v-tab>
+      <v-tab>人文</v-tab>
+      <v-tab>科技</v-tab>
+      <!-- 在此处添加其他选项卡 -->
+    </v-tabs>
     <v-divider></v-divider>
     <EssayTile v-for="essay in essays" :key="essay.essayId" :essay="essay"></EssayTile>
-    <v-row>
-      <v-col>
-        <v-pagination v-model="currentPage" :length="totalPages"></v-pagination>
-      </v-col>
-    </v-row>
+    <v-pagination class="mt-auto mb-10" v-model="currentPage" :length="totalPages" />
   </v-container>
 </template>
 
