@@ -6,27 +6,27 @@
           <!--username-->
           <v-col cols="12" md="2">
             <v-text-field variant="underlined" v-model="username.value.value" :counter="20"
-              :error-messages="username.errorMessage.value" label="username"></v-text-field>
+              :error-messages="username.errorMessage.value" label="用户名"></v-text-field>
           </v-col>
           <!--auth-->
           <v-col cols="12" md="2">
             <v-select variant="underlined" v-model="auth.value.value" :items="authItems"
-              :error-messages="auth.errorMessage.value" label="auth"></v-select>
+              :error-messages="auth.errorMessage.value" label="权限"></v-select>
           </v-col>
           <!--sex-->
           <v-col cols="12" md="2">
             <v-select variant="underlined" v-model="sex.value.value" :items="sexItems"
-              :error-messages="sex.errorMessage.value" label="sex"></v-select>
+              :error-messages="sex.errorMessage.value" label="性别"></v-select>
           </v-col>
           <!--email-->
           <v-col cols="12" md="2">
             <v-text-field variant="underlined" v-model="email.value.value" :error-messages="email.errorMessage.value"
-              label="email"></v-text-field>
+              label="邮箱"></v-text-field>
           </v-col>
           <!--birth-->
           <v-col cols="12" md="2">
             <v-text-field variant="underlined" v-model="birth.value.value" :counter="11"
-              :error-messages="birth.errorMessage.value" label="birth"></v-text-field>
+              :error-messages="birth.errorMessage.value" label="生日"></v-text-field>
           </v-col>
           <!--submit-->
           <v-col cols="12" md="2">
@@ -66,20 +66,20 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in info.users" :key="user.id">
+          <tr v-for="(user, index) in info.users" :key="user.id">
             <td>{{ user.userName }}</td>
             <td>{{ user.nick ?? '' }}</td>
             <td>{{ user.sex == 'M' ? '男' : '女' }}</td>
             <td>{{ user.birth ?? '' }}</td>
             <td>{{ user.email ?? '' }}</td>
-            <td>{{ authItems[parseInt(user.auth ?? '2')] }}</td>
+            <td>{{ user.auth ?? 'User' }}</td>
             <td>
               <v-row>
                 <v-btn density="compact" icon="mdi-trash-can-outline" @click="deleteUserById(user.id)" variant="tonal"
                   color="red-darken-1"></v-btn>
                 <v-btn density="compact" icon="mdi-pencil" class="ml-2">
                   <v-icon></v-icon>
-                  <user-modify v-model="tmpUser" />
+                  <user-modify v-model="info.users[index]" />
                 </v-btn>
               </v-row>
             </td>
@@ -96,15 +96,6 @@ import { User } from "@/models/user"
 import { useField, useForm } from 'vee-validate'
 import { getUsers, addUser, updateUser, deleteUser } from '@/services/api'
 import UserModify from '@/components/UserModify.vue'
-
-const tmpUser = reactive<User>({
-  id: 1,
-  userName: "Bret",
-  passWord: "",
-  email: "",
-})
-
-const dialog = ref(false)
 
 const info = reactive<{ users: User[] }>({
   users: []
@@ -190,6 +181,7 @@ const submit = handleSubmit(values => {
     console.log(res)
     getUsers().then(res => {
       info.users = res.data
+      console.log(info.users)
     })
   })
 })

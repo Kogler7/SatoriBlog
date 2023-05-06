@@ -7,44 +7,40 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field label="Legal first name*" required></v-text-field>
+            <v-col cols="6">
+              <v-text-field v-model="user.userName" label="用户名*" required></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+            <v-col cols="6">
+              <v-text-field v-model="user.nick" label="昵称"></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field label="Legal last name*" hint="example of persistent helper text" persistent-hint
-                required></v-text-field>
+            <v-col cols="6">
+              <v-select v-model="user.auth" :items="authItems" label="权限*" required></v-select>
+            </v-col>
+            <v-col cols="6">
+              <v-select v-model="user.sex" :items="sexItems" label="性别*" required></v-select>
             </v-col>
             <v-col cols="12">
-              <v-text-field label="Email*" required></v-text-field>
+              <v-text-field v-model="user.passWord" label="密码*" type="password" required></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field v-model="user.email" label="邮箱*" required></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field v-model="user.birth" label="生日"></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field label="Password*" type="password" required></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-select :items="['0-17', '18-29', '30-54', '54+']" label="Age*" required></v-select>
-            </v-col>
-            <v-col cols="12" sm="6">
-              <v-autocomplete
-                :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                label="Interests" multiple></v-autocomplete>
+              <v-text-field v-model="user.brief" label="简介"></v-text-field>
             </v-col>
           </v-row>
         </v-container>
-        <small>*indicates required field</small>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
-          Close
+          取消
         </v-btn>
-        <v-btn color="blue-darken-1" variant="text" @click="() => {
-          dialog = false
-          emits('update:modelValue', false)
-        }">
-          Save
+        <v-btn color="blue-darken-1" variant="text" @click="submit()">
+          保存
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -54,10 +50,27 @@
 
 <script lang="ts" setup>
 import { User } from '@/models/user';
-import { ref } from 'vue'
-const dialog = ref(false)
+import { ref, reactive } from 'vue'
+import { updateUser } from '@/services/api'
+
 const emits = defineEmits(['update:modelValue'])
-defineProps<{
+const props = defineProps<{
   modelValue: User,
 }>()
+
+const authItems = ["Admin", "Operator", "User", "Guest"]
+const sexItems = ["男", "女"]
+
+const user = reactive(props.modelValue)
+user.sex = user.sex == 'M' ? '男' : '女'
+
+async function submit() {
+  user.sex = user.sex == '男' ? 'M' : 'F'
+
+  updateUser(user)
+  emits('update:modelValue', user)
+  dialog.value = false
+}
+
+const dialog = ref(false)
 </script>

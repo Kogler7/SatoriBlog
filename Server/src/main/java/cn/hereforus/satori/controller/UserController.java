@@ -64,7 +64,7 @@ public class UserController {
                 "nick = '" + user.nick + "', " +
                 "brief = '" + user.brief + "', " +
                 "birth = '" + user.birth + "', " +
-                "email = '" + user.email + "', " +
+                "email = '" + user.email + "' " +
                 "where id = " + user.id;
         jdbcTemplate.execute(sql);
         return "success";
