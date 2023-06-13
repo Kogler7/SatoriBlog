@@ -17,7 +17,7 @@ public class UserController {
     @GetMapping("/users")
     public List<Map<String, Object>> getUsers() {
         System.out.println("getUsers");
-        String sql = "select * from User";//SQL查询语句
+        String sql = "select * from User limit 10";//SQL查询语句
         return jdbcTemplate.queryForList(sql);
     }
 

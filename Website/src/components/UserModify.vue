@@ -51,7 +51,7 @@
 <script lang="ts" setup>
 import { User } from '@/models/user';
 import { ref, reactive } from 'vue'
-import { updateUser } from '@/services/api'
+import { updateUser } from '@/api/user'
 
 const emits = defineEmits(['update:modelValue'])
 const props = defineProps<{
