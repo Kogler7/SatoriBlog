@@ -30,9 +30,10 @@ export interface EssayBrief {
     tags: string[]
     cover: string
     agrees: number
-    likes: number
-    stars: number
-    views: number
+    likeCnt: number
+    starCnt: number
+    cmtCnt: number
+    viewCnt: number
     initTime: Date
 }
 

@@ -14,6 +14,8 @@ const routes = [
         path: 'essay',
         name: 'Essay',
         component: () => import('@/views/home/Essay.vue'),
+        // 文章id参数
+        props: true,
       },
       {
         path: 'idea',

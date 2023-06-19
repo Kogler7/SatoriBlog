@@ -1,15 +1,30 @@
 <template>
   <v-card elevation="0">
-    <v-container>
+    <v-container @click="goEssay(essay.id)">
       <v-row>
-        <v-col cols="9">
-          <v-card-subtitle>{{ formatDate(essay.initTime) }}</v-card-subtitle>
+        <v-col cols="12">
+          <v-card-subtitle>{{ essay.initTime }}</v-card-subtitle>
           <v-card-title>{{ essay.title }}</v-card-title>
           <v-card-text>{{ essay.brief }}</v-card-text>
         </v-col>
         <v-spacer></v-spacer>
-        <v-col cols="3">
-          <v-chip class="ma-2" label v-for="tag in essay.tags" :key="tag">{{ tag }}</v-chip>
+
+        <v-col cols="2">
+          <v-card-subtitle>
+            <v-icon>mdi-heart</v-icon>
+            {{ essay.likeCnt }}
+          </v-card-subtitle>
+        </v-col>
+        <v-col cols="2">
+          <v-card-subtitle>
+            <v-icon>mdi-star</v-icon>{{ essay.starCnt }}
+          </v-card-subtitle>
+        </v-col>
+        <v-col cols="2">
+          <v-card-subtitle>
+            <v-icon>mdi-comment</v-icon>
+            {{ essay.cmtCnt }}
+          </v-card-subtitle>
         </v-col>
       </v-row>
     </v-container>
@@ -20,7 +35,18 @@
 <script lang="ts" setup>
 import { EssayBrief } from '@/models/essay'
 import { formatDate } from '@/utils/date'
+import {onMounted,onUpdated} from "vue";
+import router from "@/router";
+
 defineProps<{
   essay: EssayBrief
 }>()
+
+
+const goEssay = (essayID) => {
+  console.log('点击文章标题跳转到文章详情页'+essayID)
+  router.push('/essay?id='+essayID)
+}
+
+
 </script>

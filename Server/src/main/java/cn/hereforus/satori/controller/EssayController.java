@@ -55,4 +55,18 @@ public class EssayController {
         }
         return result;
     }
+
+    @GetMapping("/essay/info")
+    public Map<String, Object> getEssayInfo(
+            @RequestParam("id") String id
+    ) {
+        System.out.println("getEssayInfo");
+        String sql = "select * from essay,resource where essay.id=" + id + " and resource.id = essay.textId";//SQL查询语句
+        List<Map<String, Object>> results = jdbcTemplate.queryForList(sql);
+        Map<String, Object> result = results.get(0);
+        for (Map.Entry<String, Object> entry : result.entrySet()) {
+            System.out.println(entry.getKey() + " = " + entry.getValue());
+        }
+        return result;
+    }
 }

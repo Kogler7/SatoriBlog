@@ -8,19 +8,25 @@
       <!-- 在此处添加其他选项卡 -->
     </v-tabs>
     <v-divider></v-divider>
-    <EssayTile v-for="essay in essays" :key="essay.id" :essay="essay"></EssayTile>
-    <v-pagination class="mt-auto mb-10" v-model="currentPage" :length="totalPages" />
+    <EssayTile v-for="essay in essayRef.essays" :key="essay.id" :essay="essay"></EssayTile>
+    <v-pagination class="mt-auto mb-10" v-model="currentPage" :length="totalPages"/>
   </v-container>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import {ref, reactive, onMounted, onUpdated} from 'vue'
 import EssayTile from './EssayTile.vue'
-import { getLatestEssays } from '@/api/essay'
+import {getLatestEssays} from '@/api/essay'
 
 const currentPage = ref(1)
 const totalPages = ref(5)
 
+const essayRef = reactive({essays: {}})
 
-const essays = reactive(getLatestEssays())
+getLatestEssays().then(
+  res => {
+    essayRef.essays = res
+  }
+)
+
 </script>

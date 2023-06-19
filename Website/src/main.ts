@@ -6,6 +6,8 @@
 
 // Components
 import App from './App.vue'
+import 'md-editor-v3/lib/style.css';
+
 
 // Composables
 import { createApp } from 'vue'

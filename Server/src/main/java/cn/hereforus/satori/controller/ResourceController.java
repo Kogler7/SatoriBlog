@@ -21,12 +21,12 @@ public class ResourceController {
     private HttpServletResponse response;
 
 
-    @GetMapping("/essay")
+    @GetMapping("/src/essay")
     public String getEssay(
             @RequestParam(name = "path", required = false, defaultValue = "test.md")
             String path
     ) {
-        String essayPath = "src/main/resources/essays/" + path;
+        String essayPath = "src/main/resources/essays/" + path + ".md";
         System.out.println(essayPath);
         String content = "";
         try {
@@ -34,10 +34,11 @@ public class ResourceController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(content);
         return content;
     }
 
-    @GetMapping("/image")
+    @GetMapping("/src/image")
     public void getImage(
             @RequestParam(name = "path", required = false, defaultValue = "test.jpg")
             String path
