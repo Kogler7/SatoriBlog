@@ -32,7 +32,7 @@
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { hash } from '@/services/crypto'
-import { login } from '@/services/api'
+import { login } from '@/api/auth'
 const loading = ref(false)
 
 const username = ref('')
@@ -51,13 +51,15 @@ async function submit(username: string, password: string) {
   password = hash(password)
   console.log(username, password)
   try {
-    const res = await login(username, password)
+    let res = await login(username, password)
+    loading.value = false
     console.log(res)
+    if (res)
+      router.push('/')
   } catch (e) {
     console.log('error', e)
+    loading.value = false
   }
-  loading.value = false
-  router.push('/')
 }
 
 watch(loading, val => {

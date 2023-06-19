@@ -8,7 +8,7 @@
       <!-- 在此处添加其他选项卡 -->
     </v-tabs>
     <v-divider></v-divider>
-    <EssayTile v-for="essay in essays" :key="essay.essayId" :essay="essay"></EssayTile>
+    <EssayTile v-for="essay in essays" :key="essay.id" :essay="essay"></EssayTile>
     <v-pagination class="mt-auto mb-10" v-model="currentPage" :length="totalPages" />
   </v-container>
 </template>
@@ -16,40 +16,11 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import EssayTile from './EssayTile.vue'
+import { getLatestEssays } from '@/api/essay'
+
 const currentPage = ref(1)
 const totalPages = ref(5)
-const essays = reactive([
-  {
-    essayId: 0,
-    title: "文章标题",
-    brief: "文章简介",
-    userId: 0,
-    user: "用户名",
-    sectId: 0,
-    sect: "板块名",
-    tags: ["标签1", "标签2"],
-    cover: "https://picsum.photos/200/300",
-    agrees: 1,
-    likes: 2,
-    stars: 3,
-    views: 4,
-    initTime: new Date("2021-01-01"),
-  },
-  {
-    essayId: 0,
-    title: "文章标题",
-    brief: "文章简介",
-    userId: 0,
-    user: "用户名",
-    sectId: 0,
-    sect: "板块名",
-    tags: ["标签1", "标签2"],
-    cover: "https://picsum.photos/200/300",
-    agrees: 1,
-    likes: 2,
-    stars: 3,
-    views: 4,
-    initTime: new Date("2021-01-01"),
-  }
-])
+
+
+const essays = reactive(getLatestEssays())
 </script>

@@ -34,7 +34,7 @@
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { hash } from '@/services/crypto'
-import { register } from '@/services/api'
+import { register } from '@/api/auth'
 const loading = ref(false)
 
 const username = ref('')

@@ -20,7 +20,7 @@ export interface Comment {
 }
 
 export interface EssayBrief {
-    essayId: number
+    id: number
     title: string
     brief: string
     userId: number
